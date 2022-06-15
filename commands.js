@@ -3,17 +3,25 @@
 
 // GETTING STARTED
 // 1. Create a database called jaskis
-
+use jaskis
 
 // 2. Create a collection called bounties
-
+db.createCollection('bounties')
 
 // ADD THE ANIMAL BOUNTIES
 // 1. Insert the given "Thanoceros" bounty object
-
+db.jaskis.insertOne({
+    name: "Thanoceros",
+    species: "Rhinoceros",
+    location: "Grasslands",
+    wantedFor: "Eating too much grass",
+    client: "Songbird",
+    reward: 10000,
+    captured: false
+  })
 
 // 2. Query for all bounties in the bounties collection
-
+db.jaskis.find()
 
 // 3. Insert many bounties at once using the given objects
 
