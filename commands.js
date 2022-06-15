@@ -82,12 +82,16 @@ db.jaskis.insertMany([{
 // MANAGE THE DATABASE
 // Queries
 // 1. Query for all bounties in the Grasslands
+db.jaskis.find({location: 'Grasslands'})
 
 // 2. Query for all bounties with a reward worth 10000 or more
+db.jaskis.find({reward: {$gte: 10000} })
 
 // 3. Query for all bounties, but exclude the client attribute from being shown
+db.jaskis.find({}, {client: 0})
 
 // 4. Query for a Groundhog in the Woodlands
+db.jaskis.find({$and: [{location: 'Woodlands'}, {species: 'Groundhog'}]})
 
 // Update and Delete
 // 1. Update the reward for Polarwind to 10000
