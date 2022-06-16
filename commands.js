@@ -10,7 +10,8 @@ db.createCollection('bounties')
 
 // ADD THE ANIMAL BOUNTIES
 // 1. Insert the given "Thanoceros" bounty object
-db.jaskis.insertOne({
+//must insert into the bounties collection
+db.bounties.insertOne({
     name: "Thanoceros",
     species: "Rhinoceros",
     location: "Grasslands",
@@ -21,10 +22,10 @@ db.jaskis.insertOne({
   })
 
 // 2. Query for all bounties in the bounties collection
-db.jaskis.find()
+db.bounties.find()
 
 // 3. Insert many bounties at once using the given objects
-db.jaskis.insertMany([{
+db.bounties.insertMany([{
     "name": "Lokinkajou",
     "species": "Kinkajou",
     "location": "Tropical rainforest",
@@ -82,32 +83,209 @@ db.jaskis.insertMany([{
 // MANAGE THE DATABASE
 // Queries
 // 1. Query for all bounties in the Grasslands
-db.jaskis.find({location: 'Grasslands'})
+db.bounties.find({location: 'Grasslands'})
 
 // 2. Query for all bounties with a reward worth 10000 or more
-db.jaskis.find({reward: {$gte: 10000} })
+db.bounties.find({reward: {$gte: 10000} })
 
 // 3. Query for all bounties, but exclude the client attribute from being shown
-db.jaskis.find({}, {client: 0})
+//when looking for ALL, add the first argument but leave it blank
+db.bounties.find({}, {client: 0})
 
 // 4. Query for a Groundhog in the Woodlands
-db.jaskis.find({$and: [{location: 'Woodlands'}, {species: 'Groundhog'}]})
+//$and operator goes first. Everything else separated by commas. 
+db.bounties.find({$and: [{location: 'Woodlands'}, {species: 'Groundhog'}]})
 
 // Update and Delete
 // 1. Update the reward for Polarwind to 10000
-db.jaskis.updateOne(
+db.bounties.updateOne(
     { name: 'Polarwind' },
     { $set: {reward: 10000} }
     )
 
 // 2. Remove Lokinkajou
-db.jaskis.deleteOne( {name: 'Lokinkajou'} )
+db.bounties.deleteOne( {name: 'Lokinkajou'} )
 
 // 3. Delete all bounties sent by Songbird
-db.jaskis.deleteMany( {client: 'Songbird'} )
+db.bounties.deleteMany( {client: 'Songbird'} )
 
 // 4. Update all captured statuses to true
-db.jaskis.updateMany(
+//when looking for all documents, leave first argument blank
+db.bounties.updateMany(
   {},
   { $set: {captured: true} }
   )
+
+// Bonus: The Scavengers
+// 1. Make a new collection in the JASKIS database called scavengers
+db.createCollection('scavengers')
+
+// 2. Insert all the given Scavenger data
+db.scavengers.insertMany([
+{
+    "name": "Captain A'Meerkat",
+    "joined": new Date('2011-07-22'),
+    "power": "Thermoregulation",
+    "weapon": "Shovel",
+    "captured": [
+    {
+        "name": "Grim Panda",
+        "species": "Giant Panda",
+        "location": "Temperate forest",
+        "wantedFor": "Eating all the bamboo",
+        "client": "Red wolf",
+        "reward": 5000,
+        "captured": true
+    }
+    ]
+},
+{
+    "name": "The Hamster",
+    "joined": new Date('2011-07-22'),
+    "power": "Stealth",
+    "weapon": "Giant rolling ball",
+    "captured": [
+    {
+        "name": "Polarwind",
+        "species": "Polar Bear",
+        "location": "Arctic",
+        "wantedFor": "Not hibernating",
+        "client": "Sabertooth",
+        "reward": 10000,
+        "captured": true
+    }
+    ]
+},
+{
+    "name": "Thowl",
+    "joined": new Date('2011-07-22'),
+    "power": "Night vision",
+    "weapon": "Lasers",
+    "captured": [
+    {
+        "name": "Thanoceros",
+        "species": "Rhinoceros",
+        "location": "Grasslands",
+        "wantedFor": "Eating too much grass",
+        "client": "Songbird",
+        "reward": 10000,
+        "captured": true
+    },{
+        "name": "Polarwind",
+        "species": "Polar Bear",
+        "location": "Arctic",
+        "wantedFor": "Not hibernating",
+        "client": "Sabertooth",
+        "reward": 10000,
+        "captured": true
+    }
+    ]
+},
+{
+    "name": "Brown Recluse",
+    "joined": new Date('2011-07-22'),
+    "power": "Inciting fear into the heart of enemies",
+    "weapon": "Webs",
+    "captured": [
+    {
+        "name": "Thanoceros",
+        "species": "Rhinoceros",
+        "location": "Grasslands",
+        "wantedFor": "Eating too much grass",
+        "client": "Songbird",
+        "reward": 10000,
+        "captured": true
+    },{
+        "name": "Wrecking Crows",
+        "species": "Crow",
+        "location": "Grasslands",
+        "wantedFor": "Cawing too loudly",
+        "client": "Red wolf",
+        "reward": 40000,
+        "captured": true
+    }
+    ]
+},
+{
+    "name": "Falconeye",
+    "joined": new Date('2011-07-22'),
+    "power": "Flight",
+    "captured": [
+    {
+        "name": "Wrecking Crows",
+        "species": "Crow",
+        "location": "Grasslands",
+        "wantedFor": "Cawing too loudly",
+        "client": "Red wolf",
+        "reward": 40000,
+        "captured": true
+    }
+    ]
+},
+{
+    "name": "Scarlet Wolf",
+    "joined": new Date('2015-05-01'),
+    "power": "Hunting",
+    "captured": [
+    {
+        "name": "Grim Panda",
+        "species": "Giant Panda",
+        "location": "Temperate forest",
+        "wantedFor": "Eating all the bamboo",
+        "client": "Red wolf",
+        "reward": 5000,
+        "captured": true
+    }
+    ]
+},
+{
+    "name": "Black Jaguar",
+    "joined": new Date('2018-04-23'),
+    "power": "Camoflauge",
+    "captured": [
+    {
+        "name": "Grim Panda",
+        "species": "Giant Panda",
+        "location": "Temperate forest",
+        "wantedFor": "Eating all the bamboo",
+        "client": "Red wolf",
+        "reward": 5000,
+        "captured": true
+    },{
+        "name": "Thanoceros",
+        "species": "Rhinoceros",
+        "location": "Grasslands",
+        "wantedFor": "Eating too much grass",
+        "client": "Songbird",
+        "reward": 10000,
+        "captured": true
+    }
+    ]
+}
+])
+
+// Queries
+// 1. Find all Scavengers who joined the team after December 31, 2011
+//Must use ISODate format ('yyyy-mm-dd')
+db.scavengers.find( {joined: {$gte: ISODate('2011-12-31')} } )
+
+// 2. Find all Scavengers who helped catch Thanoceros
+// need to use the WHOLE info for Thanoceros? Has to match the exact case.
+db.scavengers.find( { captured: {
+"name": "Thanoceros",
+"species": "Rhinoceros",
+"location": "Grasslands",
+"wantedFor": "Eating too much grass",
+"client": "Songbird",
+"reward": 10000,
+"captured": true
+} } )
+
+// 3. Find all Scavengers who helped catch an animal bounty with a reward greater than $11000
+db.scavengers.find( {'captured.reward': {$gt: 11000}} )
+
+
+// 4. Find all Scavengers that don't have a weapon.
+//when $exists boolean is set to false, the results will be
+//any item WITHOUT the chosen field
+db.scavengers.find( {weapon: { $exists: false}} )
